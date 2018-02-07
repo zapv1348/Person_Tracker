@@ -24,8 +24,8 @@ SIZE = size
 OBJDUMP = objdump
 
 # define flags
-CFLAGS = -c -std=c++17 -Wall -Wextra -g -O2 -I$(INCDIR)
-LDFLAGS = -I$(INCDIR) 
+CFLAGS = -c -std=c++17 -Wall -Wextra -g -O2 -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
+LDFLAGS = -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 SFLAGS = -S -O2 -Wall -Wextra -I$(INCDIR)
 
 #==================================================
