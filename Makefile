@@ -8,6 +8,8 @@
 # Common Configuration Section
 #==================================================
 
+UNAME := $(shell uname -s)
+
 # initialize directory paths
 OBJDIR = ./obj
 SRCDIR = ./src
@@ -24,7 +26,12 @@ SIZE = size
 OBJDUMP = objdump
 
 # define flags
-CFLAGS = -c -std=c++17 -Wall -Wextra -g -O2 -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
+ifeq ($(UNAME), Darwin)
+CFLAGS = -c -std=c++14 -Wall -Wextra -g -DDARWIN -O2 -I$(INCDIR) $(shell pkg-config --cflags  opencv)
+endif
+ifeq ($(UNAME), Linux)
+CFLAGS = -c -std=c++17 -Wall -Wextra -g -DLINUX -O2 -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
+endif
 LDFLAGS = -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 SFLAGS = -S -O2 -Wall -Wextra -I$(INCDIR)
 

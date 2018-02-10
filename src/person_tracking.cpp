@@ -21,8 +21,10 @@ private:
 public:
     capture_copy(){
         capture.open(-1);
-        if ( !capture.isOpened()){
-            //throw exception prolly
+        if(!capture.isOpened())
+        {
+            cout <<  "YO CONNECT A CAMERA FOOL" << endl;
+            throw;
         }
     }
     Mat grab_frame(){
@@ -37,7 +39,12 @@ private:
     Mat frame;
     Mat grey_frame;
     std::vector<Rect> face_rectangle;
-    string face_cascade_name = "/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml";
+#ifdef LINUX
+    string face_cascade_name = "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt2.xml";
+#elif DARWIN
+    string face_cascade_name = "/usr/local/Cellar/opencv/3.4.0_1/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml";
+#endif
+
     CascadeClassifier face_cascade;
     string window_name = "YO FACE";
 
@@ -46,8 +53,9 @@ public:
     detect_face(){
         if(!face_cascade.load(face_cascade_name))
         {
-            //throw an err prolly
-        }
+            cout << "WTF, couldn't load the face cascade" << endl;
+            throw std::invalid_argument( "received negative value" );;
+        } 
     }
     void detect(Mat in_frame){
         frame=in_frame;
