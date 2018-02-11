@@ -23,7 +23,7 @@ public:
     int count=0;
 
     capture_copy(){
-        capture.open(-1);
+        capture.open(0);
         if(!capture.isOpened())
         {
             cout <<  "YO CONNECT A CAMERA FOOL" << endl;
