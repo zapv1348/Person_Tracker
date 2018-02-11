@@ -78,6 +78,7 @@ clean:
 	rm -f person_tracker  
 	rm -rf obj
 	rm -rf asm
+	rm -rf training_data
 
 #==================================================
 # Implicit Targets
@@ -87,6 +88,7 @@ $(OBJDIR)/%.o: %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -o $@ $<
 
 person_tracker: $(OBJS)
+	@mkdir -p training_data
 	$(CC) $(LDFLAGS) -o $@ $^
 
 $(ASMDIR)/%.S: %.cpp $(DEPS)
