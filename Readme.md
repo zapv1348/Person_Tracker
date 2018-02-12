@@ -11,5 +11,9 @@ This project will be written in C++ and Python because those languages have supp
 * State Estimator (for estimating the relative position of the individual and accounting for noise)
 * Interface (for using this tool)
 
-## TBD
-More to come
+## Current Work
+* Just got the first couple of classes written out in a single file
+..* This uses the haar cascade classifier to detect a persons face and capture images on that face
+..* Those faces will be used for training data below
+* Probably need to move their definitions to a header
+* Need to figure out how to use Convolutional Neural Networks for training
