@@ -64,7 +64,6 @@ void detect_face::capture_image(int count){
         if(30<saved_image_count) saved_image_count=0;
     }
 }
-
 #ifdef TEST
 //#if 1
 int main( void )

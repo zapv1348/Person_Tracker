@@ -29,13 +29,14 @@ OBJDUMP = objdump
 ifeq ($(UNAME), Darwin)
 CFLAGS = -c -std=c++14 -Wall -Wextra -g -DDARWIN -O2 -I$(INCDIR) $(shell pkg-config --cflags  opencv)
 TSTFLAGS = -DTEST -DDARWIN -std=c++14  -Wall -Wextra -g -I$(INCDIR) $(shell pkg-config --clfags --libs opencv)
+SFLAGS = -S -DDARWIN -O2 -Wall -Wextra -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 endif
 ifeq ($(UNAME), Linux)
 CFLAGS = -c -std=c++17 -Wall -Wextra -g -DLINUX -O2 -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 TSTFLAGS = -DTEST -DLINUX -std=c++17  -Wall -Wextra -g -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
+SFLAGS = -S -DLINUX -O2 -Wall -Wextra -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 endif
 LDFLAGS = -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
-SFLAGS = -S -O2 -Wall -Wextra -I$(INCDIR)
 
 #==================================================
 # File Lists
@@ -55,10 +56,6 @@ SMS := $(addprefix $(ASMDIR)/,$(SRCS:%.cpp=%.S))
 # test file list
 TST := $(addprefix $(TSTDIR)/,$(SRCS:%.cpp=%.test))
 
-# .elf file list
-elf := person_tracker
-
-
 #==================================================
 # Specific Build Targets
 #==================================================
@@ -73,15 +70,16 @@ asm-file: $(SMS)
 .PHONY: compile-all
 compile-all: $(OBJS)
 
-.PHONY: build
-build: $(OBJS)
-	$(CC) $(LDFLAGS) -o ./person_tracker $^
+.PHONY: person_tracker
+person_tracker: $(OBJS) main.o
+	@mkdir -p training_data
+	$(CC) $(LDFLAGS) -o $@ $^
 	$(OBJDUMP) -f person_tracker
 	$(SIZE) ./person_tracker
 
 .PHONY: clean
 clean:
-	rm -f person_tracker  
+	rm -f person_tracker main.o
 	rm -rf obj
 	rm -rf asm
 	rm -rf training_data
@@ -94,11 +92,10 @@ $(OBJDIR)/%.o: %.cpp $(DEPS)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ $<
 
-person_tracker: $(OBJS)
-	@mkdir -p training_data
-	$(CC) $(LDFLAGS) -o $@ $^
+main.o: main.cpp $(DEPS)
+	$(CC) $(CFLAGS) -o $@ $<
 
-$(TSTDIR)/%.test: %.cpp $(DEPS)
+$(TST): $(SRCS)  $(OBJS)
 	@mkdir -p $(@D)
 	$(CC) $(TSTFLAGS) -o $@ $<
 
