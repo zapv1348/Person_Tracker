@@ -50,7 +50,7 @@ void detect_face::display(){
     }
 
     imshow(window_name, dummy_frame);
-    waitKey(10);
+    waitKey(30);
 }
 
 //will store the image
@@ -65,17 +65,20 @@ void detect_face::capture_image(int count){
     }
 }
 
-#define TEST 1
-#if TEST==1
-
+#ifdef TEST
+//#if 1
 int main( void )
 {
     capture_copy sup;
-    detect_face foo("haarcascade_frontalface_alt2.xml");
+    detect_face alt2("haarcascade_frontalface_alt2.xml");
+    //detect_face alt_tree("haarcascade_frontalface_alt_tree.xml");
+    //detect_face alt("haarcascade_frontalface_alt.xml");
+    //detect_face default("haarcascade_frontalface_default.xml");
+    //detect_face profileface("haarcascade_profileface.xml");  
     while(1){
-        foo.detect(sup.grab_frame());
-        foo.display();
-        foo.capture_image(sup.count);
+        alt2.detect(sup.grab_frame());
+        alt2.display();
+        alt2.capture_image(sup.count);
     }
 }
 #endif

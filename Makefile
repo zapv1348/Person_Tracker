@@ -15,7 +15,7 @@ OBJDIR = ./obj
 SRCDIR = ./src
 ASMDIR = ./asm
 INCDIR = ./inc
-
+TSTDIR = ./test
 # set default architecture
 ARCH := x86
 
@@ -28,9 +28,11 @@ OBJDUMP = objdump
 # define flags
 ifeq ($(UNAME), Darwin)
 CFLAGS = -c -std=c++14 -Wall -Wextra -g -DDARWIN -O2 -I$(INCDIR) $(shell pkg-config --cflags  opencv)
+TSTFLAGS = -DTEST -DDARWIN -std=c++14  -Wall -Wextra -g -I$(INCDIR) $(shell pkg-config --clfags --libs opencv)
 endif
 ifeq ($(UNAME), Linux)
 CFLAGS = -c -std=c++17 -Wall -Wextra -g -DLINUX -O2 -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
+TSTFLAGS = -DTEST -DLINUX -std=c++17  -Wall -Wextra -g -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 endif
 LDFLAGS = -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 SFLAGS = -S -O2 -Wall -Wextra -I$(INCDIR)
@@ -50,6 +52,8 @@ OBJS := $(addprefix $(OBJDIR)/,$(SRCS:%.cpp=%.o))
 # .S/.asm file list
 SMS := $(addprefix $(ASMDIR)/,$(SRCS:%.cpp=%.S))
 
+# test file list
+TST := $(addprefix $(TSTDIR)/,$(SRCS:%.cpp=%.test))
 
 # .elf file list
 elf := person_tracker
@@ -60,6 +64,8 @@ elf := person_tracker
 #==================================================
 all: person_tracker
 
+.PHONY: test
+test: $(TST)
 
 .PHONY: asm-file
 asm-file: $(SMS)
@@ -79,6 +85,7 @@ clean:
 	rm -rf obj
 	rm -rf asm
 	rm -rf training_data
+	rm -rf test	
 
 #==================================================
 # Implicit Targets
@@ -90,6 +97,10 @@ $(OBJDIR)/%.o: %.cpp $(DEPS)
 person_tracker: $(OBJS)
 	@mkdir -p training_data
 	$(CC) $(LDFLAGS) -o $@ $^
+
+$(TSTDIR)/%.test: %.cpp $(DEPS)
+	@mkdir -p $(@D)
+	$(CC) $(TSTFLAGS) -o $@ $<
 
 $(ASMDIR)/%.S: %.cpp $(DEPS)
 	@mkdir -p $(@D)
