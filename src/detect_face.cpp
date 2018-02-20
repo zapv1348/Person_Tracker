@@ -1,28 +1,11 @@
-#include "haar_dee_haar.hpp"
+#include "detect_face.hpp"
+#include "capture_copy.hpp"
 #include "stdio.h"
 
 #include "opencv2/highgui.hpp"
 
 using namespace std;
 using namespace cv;
-
-
-//The idea will be to run a thread with this class which just captures frames and returns the current one
-//for now, it is just going to read
-capture_copy::capture_copy(){
-    capture.open(0);
-    if(!capture.isOpened())
-    {
-        cout <<  "YO CONNECT A CAMERA FOOL" << endl;
-        throw std::invalid_argument( "or it sucks and can't find it");
-    }
-}
-
-Mat capture_copy::grab_frame(){
-    capture.read(current_frame);
-    count++;
-    return current_frame;   
-}
 
     //currently have to call this for every frame when you want to detect a face.
 detect_face::detect_face(string classifier_xml){
@@ -50,7 +33,7 @@ void detect_face::display(){
     }
 
     imshow(window_name, dummy_frame);
-    waitKey(30);
+    waitKey(1);
 }
 
 //will store the image
@@ -68,7 +51,7 @@ void detect_face::capture_image(int count){
 //#if 1
 int main( void )
 {
-    capture_copy sup;
+    capture_copy sup();
     detect_face alt2("haarcascade_frontalface_alt2.xml");
     //detect_face alt_tree("haarcascade_frontalface_alt_tree.xml");
     //detect_face alt("haarcascade_frontalface_alt.xml");

@@ -1,7 +1,7 @@
 // this file will define the functions that will be used to track a single human being
 
-#ifndef PERSON_TRACKING_H
-#define PERSON_TRACKING_H
+#ifndef DETECT_FACE_H
+#define DETECT_FACE_H
 
 #include <iostream>
 
@@ -12,17 +12,6 @@
 using namespace cv;
 using namespace std;
 
-class capture_copy
-{
-    private:
-        VideoCapture capture;
-        Mat current_frame;
-        Mat old_frame;
-    public:
-        int count=0;
-        capture_copy();
-        Mat grab_frame();
-};
 
 class detect_face
 {
@@ -46,4 +35,4 @@ class detect_face
         void display();
         void capture_image(int count);
 };
-#endif //PERSON_TRACKING_H
+#endif //DETECT_FACE_H

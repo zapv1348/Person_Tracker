@@ -1,4 +1,5 @@
-#include "haar_dee_haar.hpp"
+#include "decision_maker.hpp"
 
 int main(){
+    project_Dispatcher();
 }
