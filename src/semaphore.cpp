@@ -1,7 +1,5 @@
 #include "semaphore.hpp"
 
-using namespace std;
-
 semaphore::semaphore(int count){
     this->count=count;
 }

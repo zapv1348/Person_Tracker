@@ -4,18 +4,15 @@
 
 #include "opencv2/highgui.hpp"
 
-using namespace std;
-using namespace cv;
-
     //currently have to call this for every frame when you want to detect a face.
 detect_face::detect_face(string classifier_xml){
     if(!face_cascade.load(path_prefix+classifier_xml))
     {
-        cout << "WTF, couldn't load the face cascade" << endl;
-        throw std::invalid_argument( "Probably doesn't have the right file location" );;
+        std::cout << "WTF, couldn't load the face cascade" << std::endl;
+        throw std::invalid_argument( "Probably doesn't have the right file location" );
     } 
 }
-void detect_face::detect(Mat in_frame){
+void detect_face::detect(cv::Mat in_frame){
     frame=in_frame;
     cvtColor(frame, grey_frame, COLOR_BGR2GRAY);
     equalizeHist(grey_frame, grey_frame);
@@ -25,8 +22,8 @@ void detect_face::detect(Mat in_frame){
 
 //just puts it on the screen
 void detect_face::display(){
-    Mat dummy_frame=this->frame.clone();
-    for (size_t i = 0; i< face_rectangle.size(); i++){
+    cv::Mat dummy_frame=this->frame.clone();
+    for (std::size_t i = 0; i< face_rectangle.size(); i++){
         Point topleft (face_rectangle[i].x,face_rectangle[i].y);
         Point botright(face_rectangle[i].x+face_rectangle[i].width,face_rectangle[i].y+face_rectangle[i].height);
         rectangle( dummy_frame, topleft, botright, Scalar( 255, 0, 255 ), 1, 8, 0 );
@@ -38,7 +35,7 @@ void detect_face::display(){
 
 //will store the image
 void detect_face::capture_image(int count){
-    Mat cropped_image;
+    cv::Mat cropped_image;
     if ((face_rectangle.size()==1)&&(!(count%20))){
         cropped_image=frame(face_rectangle[0]);
         sprintf(output_image_string,"./training_data/data_%d.png",(int)saved_image_count);

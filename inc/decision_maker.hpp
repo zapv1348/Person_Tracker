@@ -3,7 +3,6 @@
 #include <thread>
 #include <vector>
 
-using namespace std;
 
 /** The idea is that this class will act as a main loop
  * that means it must maintain all threads that will be launched

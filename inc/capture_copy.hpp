@@ -10,9 +10,6 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/videoio.hpp"
 
-
-using namespace cv;
-
 class capture_copy
 {
     private:
@@ -24,6 +21,6 @@ class capture_copy
         capture_copy(uint32_t signal_count);
         void loop_for_Frame();
         std::thread wrap_lff();
-        Mat grab_frame();
+        cv::Mat grab_frame();
 };
 #endif //CAPTURE_COPY_H
