@@ -31,7 +31,7 @@ void capture_copy::loop_for_Frame(){
 }
 
 thread capture_copy::wrap_lff(){
-    return  thread(this->loop_for_Frame);
+    return  std::thread([=] {loop_for_Frame();});
 }
 
 

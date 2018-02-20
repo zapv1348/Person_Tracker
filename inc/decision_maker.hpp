@@ -11,6 +11,9 @@ using namespace std;
  */
 
 class project_Dispatcher{
+    private: 
+        std::thread main_dispatch;
+        std::vector<std::thread> workers;
     public:
         project_Dispatcher();
 };
