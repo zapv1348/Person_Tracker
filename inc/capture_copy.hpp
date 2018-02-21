@@ -13,8 +13,8 @@
 class capture_copy
 {
     private:
-        VideoCapture capture;
-        Mat current_frame;
+        cv::VideoCapture capture;
+        cv::Mat current_frame;
         uint32_t sig_count;
     public:
         semaphore signal;

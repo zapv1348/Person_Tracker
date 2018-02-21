@@ -5,9 +5,7 @@ semaphore::semaphore(int count){
 }
 
 void semaphore::give_Mult(int to_give){
-    this->sem_mutex.lock();
-    this->count+=to_give;
-    this->sem_mutex.unlock();
+    this->count.fetch_add(to_give);
 }
 
 void semaphore::take(){

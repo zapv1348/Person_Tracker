@@ -16,18 +16,18 @@ class detect_face
         std::size_t saved_image_count=0;
         cv::Mat frame;
         cv::Mat grey_frame;
-        std::vector<Rect> face_rectangle;
-        char output_image_std::string[256];
+        std::vector<cv::Rect> face_rectangle;
+        char output_image_string[256];
 #ifdef LINUX
-        std::std::string path_prefix = "/usr/share/opencv/haarcascades/";
+        std::string path_prefix = "/usr/share/opencv/haarcascades/";
 #elif DARWIN
         std::string path_prefix = "/usr/local/Cellar/opencv/3.4.0_1/share/OpenCV/haarcascades/";
 #endif
-        CascadeClassifier face_cascade;
-        std::string window_name = "YO_FACE";
+        std::string path_suffix;
+        cv::CascadeClassifier face_cascade;
     public:
         detect_face(std::string classifier_xml);
-        void detect(Mat in_frame);
+        void detect(cv::Mat in_frame);
         void display();
         void capture_image(int count);
 };

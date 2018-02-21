@@ -1,5 +1,3 @@
-#include "capture_copy.hpp"
-#include "detect_face.hpp"
 #include <thread>
 #include <vector>
 

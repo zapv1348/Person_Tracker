@@ -1,8 +1,9 @@
 #include <mutex>
+#include <atomic>
 
 class semaphore{
     private:
-        int count;
+        std::atomic_int count;
         std::mutex sem_mutex;
     public:
         semaphore(int count=0);

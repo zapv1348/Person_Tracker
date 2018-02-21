@@ -36,7 +36,7 @@ CFLAGS = -c -std=c++17 -Wall -Wextra -g -DLINUX -O2 -I$(INCDIR) $(shell pkg-conf
 TSTFLAGS = -DTEST -DLINUX -std=c++17  -Wall -Wextra -g -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 SFLAGS = -S -DLINUX -O2 -Wall -Wextra -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
 endif
-LDFLAGS = -I$(INCDIR) $(shell pkg-config --cflags --libs opencv)
+LDFLAGS = -I$(INCDIR) $(shell pkg-config --cflags --libs opencv) -pthread
 
 #==================================================
 # File Lists
