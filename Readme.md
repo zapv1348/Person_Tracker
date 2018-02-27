@@ -18,3 +18,17 @@ This project will be written in C++ and Python because those languages have supp
     * Those faces will be used for training data below
 * Probably need to move their definitions to a header
 * Need to figure out how to use Convolutional Neural Networks for training
+
+## Step by step guide (theoretically)
+These are the very important steps to making the robot detect you as an individual
+1. Walk up to robot
+1. Say hello to robot (robot doesn't actually have a microphone, but it makes it feel good)
+1. Begin registration with robot (probably by pressing a button)
+    * Registration involves detecting your face and taking pictures so we can train the robot to detect only your face (YOUR FACE)
+    * That means if there are multiple people in the shot it will disregard your face
+    * Multiple lighting conditions and facial angles are ideal
+    * also need to take photos of the whole body
+1. Once the robot has taken enough photos it will drive around in a circle indicating it has registered you (maybe just put a speaker on it)
+1. With training completed, the robot now will detect you and follow you around
+    * This involves detecting face, associating a body of known height with said face and then getting distance
+    * once we have distance very fancy controls algorithms will allow the robot to follow you around
